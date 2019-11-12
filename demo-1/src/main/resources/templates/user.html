@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="BIG5">
+<title>Insert title here</title>
+<script src="/js/jquery.min.js"></script>
+</head>
+<body>
+	<input id = 'findanme' type = 'text'>name
+	<input id = 'findpw' type = 'text'>password
+	<button id = 'submit'>submit</button>
+	
+	<script>
+		$("#submit").click(function(){
+			var data = {
+					id:null,
+					account:$("#findanme").val(),
+					pswd:$("#findpw").val()
+			}
+			
+			 $.ajax({
+			      type : "POST",
+			      contentType : "application/json",
+			      url : window.location + "user/findId",
+			      data : JSON.stringify(data),
+			      dataType : 'json',
+			      success : function(result) {
+			    	  if(result.status==="200"){
+			    	console.log(result);
+			    	  }else{
+			    		  alert("not found")
+			    	  }
+			        
+			      },
+			      error : function(e) {
+			        alert("Error!")
+			        console.log("ERROR: ", e);
+			      }
+			    });
+		})
+	</script>
+</body>
+</html>

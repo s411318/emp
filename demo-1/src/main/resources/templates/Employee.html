@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang = "zh-Hant-TW" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta>
+<title>Insert title here</title>
+</head>
+<body>
+<p style="text-align: center; font-size:25px">天天天公司出勤系統，請{{name}}確認出勤狀態</p>
+
+<table border=4 align=center width=20% bgcolor=white cellspacing=5 cellpadding=6>
+    <tr>
+        <td>員工編號</td>
+        <td>{{id}}</td>
+    </tr>
+
+    <tr>
+        <td>名字</td>
+        <td>{{name}}</td>
+    </tr>
+
+    <tr>
+        <td>性別</td>
+        <td>{{sex==='1' ? '男' : '女' }}</td>
+    </tr>
+    
+    <tr>
+        <td>身分證字號</td>
+        <td>{{personId}}</td>
+    </tr>
+
+    <tr>
+        <td>出生年月日</td>
+        <td>{{birthDate}}</td>
+    </tr>
+    <tr>
+        <td>連絡電話</td>
+        <td>{{phone}}</td>
+    </tr>
+    <tr>
+        <td>職位</td>
+        <td>{{position}}</td>
+    </tr>
+    <tr>
+        <td>部門</td>
+        <td>{{department}}</td>
+    </tr>
+    <tr style = "text-align: center;">
+        <td><button >打卡</button></td>
+        <td><button >請假</button></td>
+    </tr>
+
+</table>
+
+
+
+</body>
+</html>
