@@ -30,6 +30,7 @@ public class EmployeeController {
         while (it.hasNext()) {
             Employee emplo = it.next();
             System.out.println(emplo.getPunch().get(0).getCheckstatus());
+            System.out.println("TTESSSSSSSSSSSSSSSSSSSSSS");
             
             
             
