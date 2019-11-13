@@ -1,56 +1,84 @@
 <!DOCTYPE html>
 <html lang = "zh-Hant-TW" xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta>
+<meta charset="BIG5">
 <title>Insert title here</title>
+<script src="/js/jquery.min.js"></script>
 </head>
 <body>
-<p style="text-align: center; font-size:25px">¤Ñ¤Ñ¤Ñ¤½¥q¥X¶Ô¨t²Î¡A½Ğ{{name}}½T»{¥X¶Ôª¬ºA</p>
+<p style="text-align: center; font-size:25px">å¤©å¤©å¤©å¤©å‡ºå‹¤ç³»çµ± è«‹ç¢ºèªå‡ºå‹¤ç³»çµ±</p>
 
 <table border=4 align=center width=20% bgcolor=white cellspacing=5 cellpadding=6>
     <tr>
-        <td>­û¤u½s¸¹</td>
-        <td>{{id}}</td>
+        <td>å“¡å·¥ç·¨è™Ÿ</td>
+        <td id = "insertid" th:text= "${emplist.getId()}"></td>
     </tr>
 
     <tr>
-        <td>¦W¦r</td>
-        <td>{{name}}</td>
+        <td>åå­—</td>
+        <td th:text= "${emplist.getName()}"></td>
     </tr>
 
     <tr>
-        <td>©Ê§O</td>
-        <td>{{sex==='1' ? '¨k' : '¤k' }}</td>
+        <td>æ€§åˆ¥</td>
+        <td th:text= "${emplist.getSex()}"></td>
     </tr>
     
     <tr>
-        <td>¨­¤ÀÃÒ¦r¸¹</td>
-        <td>{{personId}}</td>
+        <td>èº«åˆ†è­‰å­—è™Ÿ</td>
+        <td th:text= "${emplist.getPersonid()}"></td>
     </tr>
 
     <tr>
-        <td>¥X¥Í¦~¤ë¤é</td>
-        <td>{{birthDate}}</td>
+        <td>å‡ºç”Ÿå¹´æœˆæ—¥</td>
+        <td th:text= "${emplist.getBirthdate()}"></td>
     </tr>
     <tr>
-        <td>³sµ¸¹q¸Ü</td>
-        <td>{{phone}}</td>
+        <td>é€£çµ¡é›»è©±</td>
+        <td th:text= "${emplist.getPhone()}"></td>
     </tr>
     <tr>
-        <td>Â¾¦ì</td>
-        <td>{{position}}</td>
+        <td>è·ä½</td>
+        <td th:text= "${emplist.getPosition()}"></td>
     </tr>
     <tr>
-        <td>³¡ªù</td>
-        <td>{{department}}</td>
+        <td>éƒ¨é–€</td>
+        <td th:text= "${emplist.getDepartment()}"></td>
     </tr>
     <tr style = "text-align: center;">
-        <td><button >¥´¥d</button></td>
-        <td><button >½Ğ°²</button></td>
+        <td><button id = "punchin">æ‰“å¡</button></td>
+        <td><button id = "holidayin">è«‹å‡</button></td>
     </tr>
 
 </table>
-
+<script type="text/javascript">
+	$("#punchin").click(function(){
+		
+		var id = $("#insertid").html();
+		var data = {
+				id:id,
+				checkstatus:null,
+				checktime:null
+		}
+		$.ajax({
+		      type : "POST",
+		      contentType : "application/json",
+		      url : "http://localhost:8081/punch/in",
+		      data : JSON.stringify(data),
+		      dataType : 'json',
+		      success : function(result) {
+		    	 
+		    	  console.log(result);
+		    	  
+		        
+		      },
+		      error : function(e) {
+		        alert("Error!")
+		        console.log("ERROR: ", e);
+		      }
+		    });
+	})
+</script>
 
 
 </body>

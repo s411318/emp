@@ -36,27 +36,27 @@ public class UserController {
     @ResponseBody
     public Response findId(@RequestBody User user) {
     		
-//    		int id = user.getId();
-//    		String status = null;
-//    		Response response = new Response();
-//    		try {
-//    		User user1 = userservice.findById(id);
-//    		status = String.valueOf(HttpStatus.OK.value());
-//    		response = new Response(status,user1);
-//    		}catch(NullPointerException e) {
-//    			status = String.valueOf(HttpStatus.NOT_FOUND.value());
-//    			User usernull = new User();
-//    		response = new Response(status,usernull);
-//    		}
-//    		System.out.println(response.getStatus());
+
     	String account = user.getAccount();
     	String pswd = user.getPswd();
+    	List<User> user1;
+    	Response res = new Response();
     	System.out.println(account+pswd);
-    	List<User> user1 = userservice.findbyNamePswd(account, pswd);
+    	try {
+    	user1 = userservice.findbyNamePswd(account, pswd);
+    	if(!user1.isEmpty()) {
+    		res = new Response("200",user1);
+    	}else {
+    		res = new Response("400",user1);
+    	}
+    	 
+    	}catch(NullPointerException e) {
+    		e.printStackTrace();
+    	}
+		return res;
     	
-    	Response res = new Response("200",user1);
     	
     		
-    	   return res;
+    	  
     	 }
 }

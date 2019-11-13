@@ -2,11 +2,14 @@ package com.example.demo.controller;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.demo.entity.Employee;
 
@@ -22,19 +25,16 @@ public class EmployeeController {
 	
 
 	
-	@GetMapping("/employee")
-    public String prod(Model model) {
-		Integer id = 1;
-		List<Employee> emp = employeeservice.findAll();
-		Iterator<Employee> it = emp.iterator();
-        while (it.hasNext()) {
-            Employee emplo = it.next();
-            System.out.println(emplo.getPunch().get(0).getCheckstatus());
-            System.out.println("TTESSSSSSSSSSSSSSSSSSSSSS");
+	@GetMapping("/employee/{itemid}")
+    public String prod(@PathVariable("itemid") int itemid,Model model) {
+
+		
+		List<Employee> emplist = employeeservice.findsById(itemid);
+		
+		model.addAttribute("emplist",emplist.get(0) );
             
             
-            
-        }
+        
 
 		return "Employee";
 		

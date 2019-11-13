@@ -12,7 +12,7 @@ public class IndexController {
 	@GetMapping("/")
     public String prod(Model model) {
 
-		return "user";
+		return "login";
 		
 		}
 }

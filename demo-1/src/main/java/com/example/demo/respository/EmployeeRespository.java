@@ -13,6 +13,9 @@ import com.example.demo.entity.Employee;
 public interface EmployeeRespository extends JpaRepository<Employee, Integer> {
 	
 List<Employee> findAll();
+
+@Query(value = "select * from employee where id = :empId", nativeQuery = true)
+List<Employee> findsById(@Param("empId") int empId);
 	
 @Query(value = "select * from product where UNITPRICE > 1000 and code = :productCode", nativeQuery = true)
 List<Employee> findMaxPrice(@Param("productCode") String productCode);
