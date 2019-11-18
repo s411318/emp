@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="BIG5">
+<title>Insert title here</title>
+<script src="/js/jquery.min.js"></script>
+</head>
+<body>
+<p style="text-align:center; font-size: 20px;">帳號登入</p>
+
+
+
+<table border=4 align=center width=20% bgcolor=white cellspacing=5 cellpadding=6>
+    <tr>
+    <td>帳號</td>
+    <td><input id = "findanme" type="text" > </td>
+    </tr>
+    <tr>
+    <td>密碼</td>
+    <td><input id = "findpw" type="text" > </td>
+    </tr>
+    </table>
+    <br>
+    <div style="text-align:center;">
+    <button  id = "submit" >登入</button>
+    <button  id = "cheat">desdroy button</button>
+    </div>
+    
+    <script>
+    $("#cheat").click(function(){
+    	$("#findanme").val("qqq");
+    	$("#findpw").val("222");
+    })
+		$("#submit").click(function(){
+			var data = {
+					id:null,
+					account:$("#findanme").val(),
+					pswd:$("#findpw").val()
+			}
+			
+			 $.ajax({
+			      type : "POST",
+			      contentType : "application/json",
+			      url : window.location + "user/findId",
+			      data : JSON.stringify(data),
+			      dataType : 'json',
+			      success : function(result) {
+			    	  var id = result.data[0].id;
+			    	  console.log(result);
+			    	  if(result.status==="200"){
+			    		  window.location.href = "http://localhost:8081/employee/"+id;
+			    	  }else{
+			    		  alert("this account not found");
+			    	  }
+			        
+			      },
+			      error : function(e) {
+			        alert("Error!")
+			        console.log("ERROR: ", e);
+			      }
+			    });
+		})
+	</script>
+</body>
+</html>

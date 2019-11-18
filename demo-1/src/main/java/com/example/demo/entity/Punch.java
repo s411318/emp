@@ -7,13 +7,13 @@ import javax.persistence.Id;
 @Entity(name="PUNCH")
 public class Punch {
 	
-	@Id
+	
 	@Column(name = "ID")
 	private String id;
 	
 	@Column(name = "CHECKSTATUS")
 	private String checkstatus;
-	
+	@Id
 	@Column(name = "CHECKTIME")
 	private String checktime;
 

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Login V3</title>
+	<meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      
+
+<!--===============================================================================================-->	
+	<link rel="icon" type="image/png" href="/images/icons/favicon.ico"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/vendor/bootstrap/css/bootstrap.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/font/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/font/iconic/css/material-design-iconic-font.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/vendor/animate/animate.css">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="/vendor/css-hamburgers/hamburgers.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/vendor/animsition/css/animsition.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/vendor/select2/select2.min.css">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="/vendor/daterangepicker/daterangepicker.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/css/util.css">
+	<link rel="stylesheet" type="text/css" href="/css/main.css">
+<!--===============================================================================================-->
+      <script src="/vendor/jquery/jquery-3.2.1.min.js"></script>
+<!--===============================================================================================-->
+	<script src="/vendor/animsition/js/animsition.min.js"></script>
+<!--===============================================================================================-->
+	<script src="/vendor/bootstrap/js/popper.js"></script>
+	<script src="/vendor/bootstrap/js/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+	<script src="/vendor/select2/select2.min.js"></script>
+<!--===============================================================================================-->
+	<script src="/vendor/daterangepicker/moment.min.js"></script>
+	<script src="/vendor/daterangepicker/daterangepicker.js"></script>
+<!--===============================================================================================-->
+	<script src="/vendor/countdowntime/countdowntime.js"></script>
+<!--===============================================================================================-->
+      <script src="/js/main.js"></script>
+
+      <script type="text/javascript" src="/js/bootstrap-datetimepicker.js"></script>
+      <script type="text/javascript" src="/js/moment.js"></script>
+      <link rel="stylesheet" href="/css/bootstrap-datetimepicker.css" />
+</head>
+<body>
+	
+<div class="container">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary row">
+            <a class="navbar-brand col-md-5" href="#">出勤打卡系統</a>
+            <a  class=" navbar-brand col-md-7" style="text-align:right" ><button id = "logout" class="btn btn-warning">登出</button></a>
+
+          
+
+    </nav>
+        <div class="container-login100"  style="background-image: url('/images/bg-01.jpg');">
+
+            <div class="card border-primary mb-3" >
+
+                                <div class="card-header" style="text-align: center;"><h4>請假記錄</h4></div>
+                                <div class="card-body">
+                                        <table class="table table-hover">
+                                              <thead>
+                                                    <th  class="text-center">員工ID</th>
+                                                    <th  class="text-center">上班打卡時間</th>
+                                                    <th  class="text-center">下班打卡時間</th>
+                                                    
+                                              </thead>
+                                                <tbody>
+                                                    
+                                                  <tr class="table-primary" th:each="prod, rowStat: ${loggglist}">
+                                                    <td class="text-center" id="ID" align=center th:text="${prod.id}"></td>
+                                                    <td style="text-align: center;" th:text="${prod.checkstatus=='1'? '上班':'下班'}"></td>
+                                                    <td style="text-align: center;" th:text="${prod.checktime}"></td>
+                                                    
+                                                  </tr>
+                                                          <tr>
+                                                            <td style="text-align: center;">
+                                                                    <button type="submit"  onclick="lastpage()" class="btn btn-outline-primary">返回</button>
+                                                            </td>
+                                                          </tr>
+                                                </tbody>
+                                              </table>
+
+                                        </div>
+            </div>
+
+        </div>
+    
+    </div>
+    <div> 
+    <footer id="sticky-footer" class="py-4 bg-blue text-white-50 bg-primary">
+            <div class="container text-center">
+              <small>Copyright &copy; Po Chun Chao</small>
+            </div>
+          </footer>
+    </div>
+
+
+      <script>
+	function login() {
+		var Account = $("#ACCOUNT").val();
+		var Pswd = $("#PSWD").val();
+		console.log(Account);
+		console.log(Pswd);
+
+		var JData = {
+			ID : null,
+			"account" : Account,
+			"pswd" : Pswd
+
+		}
+
+		$.ajax({
+			type : "POST",
+			url : "http://localhost:8081/login/user",
+			contentType : 'application/json; charset=utf-8',
+			dataType : 'json',
+			data : JSON.stringify(JData),
+			success : function(response) {
+				console.log(response);
+				console.log(response.status);
+				if (response.status == 1) {
+					console.log(response.data[0].id);
+					console.log(response.data[0].account);
+					console.log(response.data[0].pswd);
+					$.post("http://localhost:8081/login/member", {
+						name : "John",
+						time : "2pm"
+					});
+					alert("登入成功");
+				} else {
+					alert("登入失敗");
+				}
+
+			}
+		});
+	}
+
+	function punch() {
+		var id = $("#ID").html();
+		var JData = {
+			"id" : id,
+			"checkstatus" : null,
+			"checktime" : null
+		}
+
+		$.ajax({
+			type : "POST",
+			url : "http://localhost:8081/login/punch",
+			contentType : 'application/json; charset=utf-8',
+			dataType : 'json',
+			data : JSON.stringify(JData),
+			success : function(response) {
+				console.log(response);
+				console.log(response.status);
+				console.log(response.data.id);
+				console.log(response.data.checkstatus);
+				console.log(response.data.checktime);
+				if (response.status == 001) {
+					alert('今天上班打卡成功\nID:' + response.data.id + '\n' + '打卡時間:'
+							+ response.data.checktime);
+				} else if (response.status == 002) {
+					alert('今天下班打卡成功\nID:' + response.data.id + '\n' + '打卡時間:'
+							+ response.data.checktime);
+				} else if (response.status == 003) {
+					alert('今天已打過卡\nID:' + response.data.id + '\n' + '上次打卡時間:'
+							+ response.data.checktime)
+				}
+
+			}
+		})
+	}
+
+	function lastpage() {
+		var id = $("#ID").html();
+		window.location.href="http://localhost:8081/employee/"+id;
+	}
+	
+	$("#logout").click(function(){
+		window.location.href="http://localhost:8081/";
+	})
+</script>
+
+
+</body>
+</html>

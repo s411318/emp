@@ -18,11 +18,34 @@ public class PunchServiceImpl implements PunchService{
 	@Autowired
 	PunchRespository punchRespository;
 
+	@Override
+	public Punch save(Punch punch) {
+		
+		return punchRespository.save(punch);
+	}
 
 	@Override
-	public List<Punch> findById(int id) {
-		
-		return punchRespository.findAllById(id);
+	public List<Punch> findbyIdStatus(String id, String status) {
+		// TODO Auto-generated method stub
+		return punchRespository.findbyIdStatus(id, status);
+	}
+
+	@Override
+	public List<Punch> findbyDayId(String day, String id) {
+		// TODO Auto-generated method stub
+		return punchRespository.findbyDayId(day, id);
+	}
+
+	@Override
+	public List<Punch> findAll() {
+		// TODO Auto-generated method stub
+		return punchRespository.findAll();
+	}
+
+	@Override
+	public List<Punch> findIdWeekly(String fromday1, String endday2, String id) {
+		// TODO Auto-generated method stub
+		return punchRespository.findIdWeekly(fromday1, endday2, id);
 	}
 
 

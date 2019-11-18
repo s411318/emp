@@ -7,7 +7,9 @@ import com.example.demo.entity.Punch;
 
 public interface PunchService {
 	
-
-
-List<Punch> findById(int id);
+	Punch save(Punch punch);
+	List<Punch> findbyIdStatus(String id,String status);
+	List<Punch> findbyDayId(String day,String id);
+	List<Punch> findAll();
+	List<Punch> findIdWeekly(String fromday1,String endday2,String id);
 }

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Login V3</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->	
+	<link rel="icon" type="image/png" href="/images/icons/favicon.ico"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/vendor/bootstrap/css/bootstrap.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/font/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/font/iconic/css/material-design-iconic-font.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/vendor/animate/animate.css">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="/vendor/css-hamburgers/hamburgers.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/vendor/animsition/css/animsition.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/vendor/select2/select2.min.css">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="/vendor/daterangepicker/daterangepicker.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/css/util.css">
+	<link rel="stylesheet" type="text/css" href="/css/main.css">
+<!--===============================================================================================-->
+<style>
+
+</style>
+</head>
+<body>
+	
+	<div class="limiter">
+		<div class="container-login100" style="background-image: url('/images/bg-01.jpg');">
+			<div class="wrap-login100 ">
+				<form class="login100-form validate-form ">
+					<span class="login100-form-logo">
+						<i class="zmdi zmdi-landscape"></i>
+					</span>
+
+					<span class="login100-form-title p-b-34 p-t-27">
+						系統登入
+					</span>
+
+					<div class="wrap-input100 validate-input" data-validate = "Enter username">
+						<input id = "findanme" class="input100" type="text" name="username" placeholder="Username">
+						<span class="focus-input100" data-placeholder="&#xf207;"></span>
+					</div>
+
+					<div class="wrap-input100 validate-input" data-validate="Enter password">
+						<input  id = "findpw" class="input100" type="password" name="pass" placeholder="Password">
+						<span class="focus-input100" data-placeholder="&#xf191;"></span>
+					</div>
+
+
+
+					<div class="container-login100-form-btn">
+						<button id = "submit" class="login100-form-btn">
+							登入
+						</button>
+						<img id = "cheat" src="/images/circle.gif" class="img-circle" alt="Cinque Terre" width="5" height="5"> 
+					</div>
+
+					<div class="text-center p-t-90">
+						<a class="txt1" href="#">
+							
+						</a>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	
+
+	<div id="dropDownSelect1"></div>
+
+<!--===============================================================================================-->
+	<script src="/js/jquery.min.js"></script>
+<!--===============================================================================================-->
+	<script src="/vendor/animsition/js/animsition.min.js"></script>
+<!--===============================================================================================-->
+	<script src="/vendor/bootstrap/js/popper.js"></script>
+	<script src="/vendor/bootstrap/js/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+	<script src="/vendor/select2/select2.min.js"></script>
+<!--===============================================================================================-->
+	<script src="/vendor/daterangepicker/moment.min.js"></script>
+	<script src="/vendor/daterangepicker/daterangepicker.js"></script>
+<!--===============================================================================================-->
+	<script src="/vendor/countdowntime/countdowntime.js"></script>
+<!--===============================================================================================-->
+	<script src="/js/main.js"></script>
+
+	<script>
+		
+			$("#submit").click(function(){
+				
+				var data = {
+						id:0,
+						account:$("#findanme").val(),
+						pswd:$("#findpw").val()
+				}
+				
+				 $.ajax({
+					  type : "POST",
+					  contentType : "application/json",
+					  url : window.location + "user/findId",
+					  data : JSON.stringify(data),
+					  dataType : 'json',
+					  success : function(result) {
+						  console.log(result);
+						  var id = result.data[0].id;
+						  console.log(result);
+						  if(result.status==="200"){
+							  window.location.href = "http://localhost:8081/employee/"+id;
+						  }else{
+							  alert("this account not found");
+						  }
+						
+					  },
+					  error : function(e) {
+						alert("Error!")
+						console.log("ERROR: ", e);
+					  }
+					});
+			})
+			
+			$("#cheat").click(function(event){
+			$("#findanme").val("qqq");
+			$("#findpw").val("222");
+			event.preventDefault();
+		})
+		</script>
+
+</body>
+</html>

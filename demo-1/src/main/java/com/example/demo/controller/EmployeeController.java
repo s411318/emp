@@ -36,7 +36,7 @@ public class EmployeeController {
             
         
 
-		return "Employee";
+		return "member";
 		
 	}
 }

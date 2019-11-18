@@ -32,6 +32,8 @@ public class UserServiceImpl implements UserService{
 		
 		return userRespository.findbyNamePswd(account, password);
 	}
+	
+	
 
 
 

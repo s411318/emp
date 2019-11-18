@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang = "zh-Hant-TW" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Login V3</title>
+	<meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      
+
+<!--===============================================================================================-->	
+	<link rel="icon" type="image/png" href="/images/icons/favicon.ico"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/vendor/bootstrap/css/bootstrap.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/font/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/font/iconic/css/material-design-iconic-font.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/vendor/animate/animate.css">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="/vendor/css-hamburgers/hamburgers.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/vendor/animsition/css/animsition.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/vendor/select2/select2.min.css">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="/vendor/daterangepicker/daterangepicker.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/css/util.css">
+	<link rel="stylesheet" type="text/css" href="/css/main.css">
+<!--===============================================================================================-->
+      <script src="/vendor/jquery/jquery-3.2.1.min.js"></script>
+<!--===============================================================================================-->
+	<script src="/vendor/animsition/js/animsition.min.js"></script>
+<!--===============================================================================================-->
+	<script src="/vendor/bootstrap/js/popper.js"></script>
+	<script src="/vendor/bootstrap/js/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+	<script src="/vendor/select2/select2.min.js"></script>
+<!--===============================================================================================-->
+	<script src="/vendor/daterangepicker/moment.min.js"></script>
+	<script src="/vendor/daterangepicker/daterangepicker.js"></script>
+<!--===============================================================================================-->
+	<script src="/vendor/countdowntime/countdowntime.js"></script>
+<!--===============================================================================================-->
+      <script src="/js/main.js"></script>
+
+      <script type="text/javascript" src="/js/bootstrap-datetimepicker.js"></script>
+      <script type="text/javascript" src="/js/moment.js"></script>
+      <link rel="stylesheet" href="/css/bootstrap-datetimepicker.css" />
+</head>
+<body>
+	
+<div class="container">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary row">
+            <a class="navbar-brand col-md-5" href="#">出勤打卡系統</a>
+            <a  class=" navbar-brand col-md-7" style="text-align:right" ><button id = "logout" class="btn btn-warning">登出</button></a>
+
+          
+
+    </nav>
+        <div class="container-login100"  style="background-image: url('/images/bg-01.jpg');">
+
+            <div class="card border-primary mb-3" >
+
+                                <div class="card-header" style="text-align: center;"><h4>會員資料</h4></div>
+                                <div class="card-body">
+                                        <table class="table table-hover">
+                                                <tbody>
+                                                    
+                                                  <tr class="table-primary">
+                                                    <th scope="row" style="width: 350px;" class="text-center">會員編號</th>
+                                                    <td style="text-align: center;"><p id = "insertid" th:text= "${emplist.getId()}" class=" blockquote mb-0"></p></td>
+                    
+                                                  </tr>
+                                                  <tr class="table-secondary">
+                                                        <th scope="row" class="text-center">姓名</th>
+                                                        <td style="text-align: center;"><p id = "insertname" th:text= "${emplist.getName()}" class=" blockquote mb-0"></p></td>
+                                                      </tr>
+                                                      <tr class="table-success">
+                                                            <th scope="row" class="text-center">性別</th>
+                                                            <td style="text-align: center;"><p th:text= "${emplist.getSex()==1?'男':'女'}" class=" blockquote mb-0"></p></td>
+                    
+                                                          </tr>
+                                                          <tr class="table-success">
+                                                                <th scope="row" class="text-center">身分證字號</th>
+                                                                <td style="text-align: center;"><p th:text= "${emplist.getPersonid()}" class=" blockquote mb-0"></p></td>
+                                                          </tr>
+                                                          <tr class="table-success">
+                                                                <th scope="row" class="text-center">出生年月日</th>
+                                                                <td style="text-align: center;"><p th:text= "${emplist.getBirthdate()}" class=" blockquote mb-0"></p></td>
+                                                          </tr>
+                                                          <tr class="table-success">
+                                                                <th scope="row" class="text-center">電話</th>
+                                                                <td style="text-align: center;"><p th:text= "${emplist.getPhone()}" class=" blockquote mb-0"></p></td>
+                                                          </tr>
+                                                          <tr class="table-success">
+                                                                <th scope="row" class="text-center">職位</th>
+                                                                <td style="text-align: center;"><p id = "insertposition" th:text= "${emplist.getPosition()}" class=" blockquote mb-0"></p></td>
+                                                          </tr>
+                                                           <tr class="table-success">
+                                                                <th scope="row" class="text-center">部門</th>
+                                                                <td style="text-align: center;"><p id = "insertdepartment" th:text= "${emplist.getDepartment()}" class=" blockquote mb-0"></p></td>
+                                                          </tr>
+                                                          <tr>
+                                                            <td style="text-align: center;">
+                                                                    <button id = "punchin" onclick="punch()" type="submit"  class="btn btn-outline-primary col-md-4">打卡</button>
+                                                            </td>
+                                                            <td style="text-align: center;">
+                                                                    <button id = "holidayin" type="submit" style="width:350px" data-toggle="modal" data-target="#leave" class="btn btn-outline-primary col-md-4">請假</button>
+                                                            		 
+                                                            </td>
+
+                                                          </tr>
+                                                          
+                                                          <tr>
+                                                          	<td style="text-align: center;">
+                                                          		<button id = "log" onclick="loggg()" type="submit"  style="width:350px" class="btn btn-outline-primary col-md-4">查詢</button>
+                                                          	</td>
+                                                          </tr>
+                                                </tbody>
+                                              </table>
+
+                                        </div>
+            </div>
+
+        </div>
+    
+    </div>
+<div>
+    <footer id="sticky-footer" class="py-4 bg-blue text-white-50 bg-primary">
+            <div class="container text-center">
+              <small>Copyright &copy; Po Chun Chao</small>
+            </div>
+          </footer>
+    </div>
+		                                                <!-- Modal -->
+                                                            <div class="modal fade" id="leave" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                                        <div class="modal-dialog" role="document">
+                                                                        <div class="modal-content">
+                                                                        <div class="modal-header" >
+                                                                        <h5 class="modal-title" id="exampleModalLabel">請假資料</h5>
+                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                        <span aria-hidden="true">&times;</span>
+                                                                        </button>
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                              <div class="container">
+                                                                                    <table class="table table-hover">
+                                                                                                <tr class="table-secondary">
+                                                                                                            <th scope="row" class="text-center col-md-4"><p class=" blockquote mb-0">會員編號</p></th>
+                                                                                                            <td style="text-align: center;" class="col-md-4"><p id ="modal-bodyid" class=" blockquote mb-0"></p></td>
+                                                                                                </tr>
+                                                                                                <tr class="table-success">
+                                                                                                            <th scope="row" class="text-center col-md-4"><p class=" blockquote mb-0">姓名</p></th>
+                                                                                                            <td style="text-align: center;" class="col-md-4"><p id ="modal-bodyaccount" class=" blockquote mb-0"></p></td>
+                                                                                                </tr>
+                                                                                                <tr class="table-primary">
+                                                                                                            <th scope="row" class="text-center col-md-4"><p class=" blockquote mb-0">職位</p></th>
+                                                                                                            <td style="text-align: center;" class="col-md-4"><p id ="modal-bodyposition" class=" blockquote mb-0"></p></td>
+                                                                                                </tr>
+                                                                                                <tr class="table-success">
+                                                                                                            <th scope="row" class="text-center col-md-4"><p class=" blockquote mb-0">部門</p></th>
+                                                                                                            <td style="text-align: center;" class="col-md-4"><p id ="modal-bodydepartment" class=" blockquote mb-0"></p></td>
+                                                                                                </tr>
+                                                                                                <tr class="table-success">
+                                                                                                            <th scope="row" class="text-center col-md-4"><p class=" blockquote mb-0">開始日期</p></th>
+                                                                                                            <td style="text-align: center;" class="col-md-5">    
+                                                                                                                        <input size="16" type="text" id="datetimeStart" readonly class="form_datetime">           
+                                                                                                            </td>
+                                                                                                </tr>
+                                                                                                <tr class="table-primary">
+                                                                                                            <th scope="row" class="text-center col-md-4"><p class=" blockquote mb-0">結束日期</p></th>
+                                                                                                            <td style="text-align: center;" class="col-md-4">
+                                                                                                                        <input size="16" type="text" id="datetimeEnd" readonly class="form_datetime">
+                                                                                                            </td>
+                                                                                                </tr>
+                                                                                                <tr >
+                                                                                                            <th scope="row" class="text-center col-md-4"><p class=" blockquote mb-0">假別</p></th>
+                                                                                                            <td style="text-align: center;" class="col-md-4">
+                                                                                                            	 
+    																													
+    																													<select id ="typevalue">
+      																														<option></option>
+      																														<option id ="type0"></option>
+      																														<option id ="type1">事假</option>
+      																														<option id ="type2">病假</option>
+    																													</select>
+  																												
+                                                                                                            </td>
+                                                                                                </tr>
+                                                                                                <tr >
+                                                                                                            <th scope="row" class="text-center col-md-4"><p class=" blockquote mb-0">請假時數</p></th>
+                                                                                                            <td style="text-align: center;" class="col-md-4">
+                                                                                                            	 
+    																													
+    																													<select id ="leavevalue">
+      																														<option></option>
+      																														<option id ="type0"></option>
+      																														<option id ="type1">1</option>
+      																														<option id ="type2">2</option>
+      																														<option id ="type3">3</option>
+      																														<option id ="type4">4</option>
+      																														<option id ="type5">5</option>
+      																														<option id ="type6">6</option>
+      																														<option id ="type7">7</option>
+      																														<option id ="type8">8</option>
+    																													</select>
+  																												
+                                                                                                            </td>
+                                                                                                </tr>
+
+                                                                                    </table>
+
+                                                                              </div>
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                        <button type="button"  class="btn btn-secondary" data-dismiss="modal">結束</button>
+                                                                        <button type="button" id = "apply" class="btn btn-primary">申請</button>
+                                                          </div>
+                                                        </div>
+                                                      </div>
+                                                    </div>	
+                                                    <script type="text/javascript">
+                                                      $("#datetimeStart").datetimepicker({
+                                                      language: 'zh-CN',
+                                                      autoclose:true,
+                                                      startDate:new Date()
+                                                      });
+                                                      $("#datetimeEnd").datetimepicker({
+                                                      language: 'zh-CN',
+                                                      autoclose:true,
+                                                      startDate:new Date()
+                                                      });
+ 
+                                                      </script>
+                                                      <script type="text/javascript">
+                                                  	function loggg(){
+                                                		var id= $("#insertid").html();
+                                                		window.location.href="http://localhost:8081/member/loggg/"+id;
+                                                		//var JData={
+                                                				//"id":id,
+                                                		        //}
+                                                		//$.ajax({
+                                                			//type : "POST",
+                                                			//url : "http://localhost:8081/login/punch/loggg",
+                                                			//contentType : 'application/json; charset=utf-8',
+                                                			//dataType : 'json',
+                                                			//data : JSON.stringify(JData),
+                                                			//success : function(response) {
+                                                				//console.log(response);
+                                                				//console.log(response[0].id);//第一筆資料的id
+                                                				//console.log(response.status);
+                                                				//console.log(response.data.id);				
+                                                				//console.log(response.data.checkstatus);
+                                                				//console.log(response.data.checktime);
+                                                				//alert("loggg");
+                                                			//}
+                                                			//})
+                                                	}
+
+
+                                                      function punch(){
+                                                  		var id= $("#insertid").html();
+                                                  		var JData={
+                                                  				"id":id,
+                                                  		        "checkstatus": null,
+                                                  		        "checktime":null
+                                                  		}
+                                                  		
+                                                  		$.ajax({
+                                                  			type : "POST",
+                                                  			url : "http://localhost:8081/login/punch",
+                                                  			contentType : 'application/json; charset=utf-8',
+                                                  			dataType : 'json',
+                                                  			data : JSON.stringify(JData),
+                                                  			success : function(response) {
+                                                  				console.log(response);
+                                                  				console.log(response.status);
+                                                  				console.log(response.data.id);				
+                                                  				console.log(response.data.checkstatus);
+                                                  				console.log(response.data.checktime);
+                                                  				if(response.status==001){
+                                                  					alert('今天上班打卡成功\nID:'+response.data.id+'\n'+'打卡時間:'+response.data.checktime);
+                                                  					}else if(response.status==002){
+                                                  						alert('今天下班打卡成功\nID:'+response.data.id+'\n'+'打卡時間:'+response.data.checktime);
+                                                  					}else if(response.status==003){
+                                                  						alert('今天已打過卡\nID:'+response.data.id+'\n'+'上次打卡時間:'+response.data.checktime)
+                                                  					}
+                                                  				
+                                                  				
+                                                  			}
+                                                  		})
+                                                  	}
+	
+	
+	$('#leave').on('show.bs.modal', function () {
+		
+		$("#modal-bodyid").html("");
+		$("#modal-bodyaccount").html("");
+		$("#modal-bodyposition").html("");
+		$("#modal-bodydepartment").html("");
+		var id = $("#insertid").html();
+		var name = $("#insertname").html();
+		var position = $("#insertposition").html();
+		var department = $("#insertdepartment").html();
+		var modalid = $("#modal-bodyid").html();
+		var modalaccount = $("#modal-bodyaccount").html();
+		var modalposition = $("#modal-bodyposition").html();
+		var modaldepartment = $("#modal-bodydepartment").html();
+		
+		
+		$("#modal-bodyid").html(modalid+id);
+		$("#modal-bodyaccount").html(modalaccount+name);
+		$("#modal-bodyposition").html(modalposition+position);
+		$("#modal-bodydepartment").html(modaldepartment+department);
+		
+	})
+	
+	$("#apply").click(function(){
+		
+		console.log($("#typevalue").find(":selected").text());
+		console.log($("#leavevalue").find(":selected").text());
+		
+		var data = {
+			id:$("#insertid").html(),
+			vacation:$("#typevalue").find(":selected").text(),
+			vacationstartDate:$("#datetimeStart").val(),
+			vacationendDate:$("#datetimeEnd").val(),
+			vacationTime:$("#leavevalue").find(":selected").text()
+		}
+		
+		$.ajax({
+		      type : "POST",
+		      contentType : "application/json",
+		      url : "http://localhost:8081/leave",
+		      data : JSON.stringify(data),
+		      dataType : 'json',
+		      success : function(result) {
+		    	 
+		    	  console.log(result);
+		    	  if(result.status==="200"){
+		    		  alert("請假成功");
+		    	  }else if(result.status==="300"){
+		    		  alert("重複請假");
+		    	  }else{
+		    		  alert("請假失敗");
+		    	  }
+		    	  
+		    	  
+		        
+		      },
+		      error : function(e) {
+		        alert("Error!")
+		        console.log("ERROR: ", e);
+		      }
+		    });
+	})
+	$("#logout").click(function(){
+		window.location.href="http://localhost:8081/";
+	})
+	
+	
+</script>
+
+      
+
+
+</body>
+</html>

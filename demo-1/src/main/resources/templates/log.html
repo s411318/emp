@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<script>
+	function login() {
+		var Account = $("#ACCOUNT").val();
+		var Pswd = $("#PSWD").val();
+		console.log(Account);
+		console.log(Pswd);
+
+		var JData = {
+			ID : null,
+			"account" : Account,
+			"pswd" : Pswd
+
+		}
+
+		$.ajax({
+			type : "POST",
+			url : "http://localhost:8081/login/user",
+			contentType : 'application/json; charset=utf-8',
+			dataType : 'json',
+			data : JSON.stringify(JData),
+			success : function(response) {
+				console.log(response);
+				console.log(response.status);
+				if (response.status == 1) {
+					console.log(response.data[0].id);
+					console.log(response.data[0].account);
+					console.log(response.data[0].pswd);
+					$.post("http://localhost:8081/login/member", {
+						name : "John",
+						time : "2pm"
+					});
+					alert("登入成功");
+				} else {
+					alert("登入失敗");
+				}
+
+			}
+		});
+	}
+
+	function punch() {
+		var id = $("#ID").html();
+		var JData = {
+			"id" : id,
+			"checkstatus" : null,
+			"checktime" : null
+		}
+
+		$.ajax({
+			type : "POST",
+			url : "http://localhost:8081/login/punch",
+			contentType : 'application/json; charset=utf-8',
+			dataType : 'json',
+			data : JSON.stringify(JData),
+			success : function(response) {
+				console.log(response);
+				console.log(response.status);
+				console.log(response.data.id);
+				console.log(response.data.checkstatus);
+				console.log(response.data.checktime);
+				if (response.status == 001) {
+					alert('今天上班打卡成功\nID:' + response.data.id + '\n' + '打卡時間:'
+							+ response.data.checktime);
+				} else if (response.status == 002) {
+					alert('今天下班打卡成功\nID:' + response.data.id + '\n' + '打卡時間:'
+							+ response.data.checktime);
+				} else if (response.status == 003) {
+					alert('今天已打過卡\nID:' + response.data.id + '\n' + '上次打卡時間:'
+							+ response.data.checktime)
+				}
+
+			}
+		})
+	}
+
+	function lastpage() {
+		var id= $("#ID").html();
+		window.location.href="http://localhost:8081/member/"+id;
+	}
+</script>
+<body>
+
+	<h1 style="text-align: center; font-size: 25px">天天天公司出勤系統，七天內的出勤狀態</h1>
+
+
+	<table border=4 align=center width=30% bgcolor=white cellspacing=5
+		cellpadding=6>
+		<tr>
+							<th>員工ID</th>
+							<th>上班打卡時間</th>
+							<th>下班打卡時間</th>
+						</tr>
+		<tr th:each="prod, rowStat: ${loggglist}"
+			th:style="${rowStat.odd} ? 'color: gray' : 'color: blue;'">
+			<td id="ID" align=center th:text="${prod.id}"></td>
+			<td align=center th:text="${prod.checkstatus=='1'? '上班':'下班'}"></td>
+			<td align=center th:text="${prod.checktime}"></td>
+			</tr>
+			<tr>
+			<td><input type="button" onclick="lastpage()" value="上一頁"></td>
+			</tr>
+
+	</table>
+
+
+
+
+</body>
+</html>
